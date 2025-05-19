@@ -13,6 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let videoActual = obtenerVideoAleatorio(null);
   videoPlayer.src = videoActual;
 
+  videoPlayer.addEventListener("loadedmetadata", () => {
+    videoPlayer.play().catch(error => console.log("Autoplay bloqueado:", error));
+  });
+
   videoPlayer.addEventListener("ended", () => {
     videoActual = obtenerVideoAleatorio(videoActual);
     videoPlayer.src = videoActual;
@@ -20,10 +24,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // **Pantalla completa al cargar**
-  videoPlayer.addEventListener("loadedmetadata", () => {
-    const fullscreenElement = document.documentElement;
-    if (fullscreenElement.requestFullscreen) {
-      fullscreenElement.requestFullscreen();
-    }
-  });
+  document.documentElement.requestFullscreen();
 });
